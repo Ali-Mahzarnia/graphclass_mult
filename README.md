@@ -22,7 +22,7 @@ Usage:
 Once the package is installed, users can use the following code to run an example:
 
 ```R 
-library(graphclassmult)
+library(graphclass)
 set.seed(123)
 
 
@@ -129,15 +129,15 @@ readr::read_csv("file.csv")
 This will call the "read_csv" function from the "readr" package and read in the data from the specified CSV file. For another example, related to this package we could write the following line instead of above:
 
 ```R
-gc = graphclassmult :: graphclass(X = x, Y = as.factor(y), type = "intersection", 
+gc = graphclass :: graphclass(X = x, Y = as.factor(y), type = "intersection", 
                 rho = 1, gamma = 1e-5, folds = 10, lambda_selection = T)
 ```
 
-Using the "::" operator is particularly useful if you have multiple packages loaded in your workspace and want to avoid naming conflicts between functions with the same name from different packages. It also saves memory by only loading the functions you need from a package, rather than the entire package. Below is the above example with "::" operator instead of "library(graphclassmult)".
+Using the "::" operator is particularly useful to saves memory by only loading the functions you need from a package, rather than the entire package. Below is the above example with "::" operator instead of "library(graphclass)".
 
 ```R 
 rm(list = ls()) # clean all variables in the R environment
-detach("package:graphclassmult", unload = TRUE) # detaching the library(graphclassmult) if already loaded
+detach("package:graphclass", unload = TRUE) # detaching the library(graphclass) if already loaded
 set.seed(123)
 
 
@@ -152,13 +152,13 @@ true_beta2 = c( rep(0.3,1), rep(0,2), rep( 0.5,3 ) ,rep(0,4), rep( 0.7,5 ) ,rep(
 true_beta3 = c( rep(0.5,1), rep(0,2), rep( 0.7,3 ) ,rep(0,4), rep( 0.9,5 ) ,rep(0,6), rep( 1,7 ),rep(0,8), rep( 0.3,9 ))
 true_beta = rbind (true_beta1 , true_beta2 , true_beta3) # concatenate all threee betas
 
-graphclassmult::plot_adjmatrix(true_beta1) # plot of beta1
-graphclassmult::plot_adjmatrix(true_beta2) # plot of beta2
-graphclassmult::plot_adjmatrix(true_beta3) # plot of beta3
+graphclass::plot_adjmatrix(true_beta1) # plot of beta1
+graphclass::plot_adjmatrix(true_beta2) # plot of beta2
+graphclass::plot_adjmatrix(true_beta3) # plot of beta3
 
-beta1_matrix = graphclassmult::get_matrix(true_beta[1,])
-beta2_matrix = graphclassmult::get_matrix(true_beta[2,])
-beta3_matrix = graphclassmult::get_matrix(true_beta[3,])
+beta1_matrix = graphclass::get_matrix(true_beta[1,])
+beta2_matrix = graphclass::get_matrix(true_beta[2,])
+beta3_matrix = graphclass::get_matrix(true_beta[3,])
 
 classes = c("A","B","C") # three classes 
 
@@ -177,7 +177,7 @@ y = as.factor(y) # make it as a factor
 
 
 
-gc = graphclassmult::graphclass(X = x, Y = as.factor(y), type = "intersection", 
+gc = graphclass::graphclass(X = x, Y = as.factor(y), type = "intersection", 
                 rho = 1, gamma = 1e-5, folds = 10, lambda_selection = T)
 
 gc$train_error # training erorr
