@@ -38,9 +38,20 @@ true_beta3 = c( rep(0.5,1), rep(0,2), rep( 0.7,3 ) ,rep(0,4), rep( 0.9,5 ) ,rep(
 true_beta = rbind (true_beta1 , true_beta2 , true_beta3) # concatenate all threee betas
 
 plot_adjmatrix(true_beta1) # plot of beta1
-plot_adjmatrix(true_beta2) # plot of beta2
-plot_adjmatrix(true_beta3) # plot of beta3
+```
+![plot](https://github.com/Ali-Mahzarnia/graphclass_mult/blob/main/images/Screenshot%202023-05-17%20at%203.10.32%20PM.png)
 
+```R
+plot_adjmatrix(true_beta2) # plot of beta2
+```
+![plot](https://github.com/Ali-Mahzarnia/graphclass_mult/blob/main/images/Screenshot%202023-05-17%20at%203.10.42%20PM.png)
+
+```R
+plot_adjmatrix(true_beta3) # plot of beta3
+```
+![plot](https://github.com/Ali-Mahzarnia/graphclass_mult/blob/main/images/Screenshot%202023-05-17%20at%203.11.00%20PM.png)
+
+```R
 beta1_matrix = get_matrix(true_beta[1,])
 beta2_matrix = get_matrix(true_beta[2,])
 beta3_matrix = get_matrix(true_beta[3,])
@@ -64,21 +75,94 @@ y = as.factor(y) # make it as a factor
 
 gc = graphclass(X = x, Y = as.factor(y), type = "intersection", 
                 rho = 1, gamma = 1e-5, folds = 10, lambda_selection = T)
+```
 
+```{r basicconsole}
+Running msgl 10 fold cross validation (dense design matrix)
+
+ Samples:  Features:  Classes:  Groups:  Parameters: 
+       500         46         3       10          138
+
+
+Running msgl (dense design matrix) 
+
+ Samples:  Features:  Classes:  Groups:  Parameters: 
+       500         46         3       10          138
+
+0%   10   20   30   40   50   60   70   80   90   100%
+[----|----|----|----|----|----|----|----|----|----|
+**************************************************|
+```                
+                
+```R
 gc$train_error # training erorr
+```
+
+```{r basicconsole}
+[1] 0.06
+
+```  
+
+```R
 mean(gc$Yfit!=y) # computing train err manually
+```
 
+```{r basicconsole}
+[1] 0.06
+
+```  
+
+```R
 gc$active_nodes
+```
+```{r basicconsole}
+[1] 10
 
+```  
+
+```R
 plot(gc) # plot all three betas and the reduced sum of them
+```
+```{r basicconsole}
+The plot number  1  is associated with class { A } 
+The plot number  2  is associated with class { B } 
+The plot number  3  is associated with class { C } 
+The last plot is associated with sum of abs of all beta across all classes 
+```  
+![plot](https://github.com/Ali-Mahzarnia/graphclass_mult/blob/main/images/Screenshot%202023-05-17%20at%203.24.37%20PM.png)
+![plot](https://github.com/Ali-Mahzarnia/graphclass_mult/blob/main/images/Screenshot%202023-05-17%20at%203.24.58%20PM.png)
+![plot](https://github.com/Ali-Mahzarnia/graphclass_mult/blob/main/images/Screenshot%202023-05-17%20at%203.25.11%20PM.png)
+![plot](https://github.com/Ali-Mahzarnia/graphclass_mult/blob/main/images/Screenshot%202023-05-17%20at%203.25.18%20PM.png)
 
+
+```R
 gc$nonzeros_percentage # computing percentage of non sparse beta
-mean(colSums(abs(gc$beta))!=0) # computing percentage of non sparse beta manually 
-
-gc$reduced_beta # sum of abs of betas
+```
+```{r basicconsole}
+[1] 0.6888889
 
 ```
 
+```R
+mean(colSums(abs(gc$beta))!=0) # computing percentage of non sparse beta manually 
+```
+
+```{r basicconsole}
+[1] 0.6888889
+
+```
+
+```R
+gc$reduced_beta # sum of abs of betas
+```
+```{r basicconsole}
+ [1] 1.727673737 0.000000000 0.000000000 0.343405491 0.438361047 0.594301084 0.000000000 0.000000000 0.000000000
+[10] 0.000000000 0.470352067 0.503290088 0.498336217 0.414212324 0.690360848 0.038216240 0.016761464 0.008980327
+[19] 0.043556120 0.006740429 0.040748611 0.536238549 0.339530179 0.459527108 0.439156105 0.344624596 0.338780947
+[28] 0.338477063 0.000000000 0.000000000 0.000000000 0.000000000 0.000000000 0.000000000 0.000000000 0.000000000
+[37] 1.008186437 1.098230285 0.926402676 0.862366553 0.939120845 0.897945452 0.986464040 1.075396260 0.943412810
+
+```
 
 The code above fits a subgraph selection penalty model on the simulation model (log-linear model)  using the graphclass package. It creates a graphclass object, "gc", with various attributes such as "Yfit", "train_error", "lambda", "active_nodes", and "nonzeros_percentage".
 
